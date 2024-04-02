@@ -28,7 +28,6 @@ class DatabaseOperations:
         """ Return a list of all questions and answers from DB """
         return list(Q_A_collection.find())
 
-###
     def get_random_question(self):
         """ Return a random question and answer from db or None if it's empty """
         Q_As = list(Q_A_collection.find())
