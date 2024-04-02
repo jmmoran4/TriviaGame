@@ -1,0 +1,19 @@
+Feature List:
+
+  Frontend:
+    - Need to make all of the HTML templates for each page that would be loaded for game. 
+    - Need CSS code to match each HTML file to add style according to Ben's design
+    - Need JS code to handle RESTful API endpoints i.e. each button needs a route setup to speak to the back end server
+    - Need Images/Art for game (question catagory icons, some memes to make it goofy, some animations for displaying rank as game goes on...)
+
+Backende:
+  - Need to create routes for all the different paths a user can interact with
+  - Need to add logic to attach cookies to each user to keep track of player stats in case of a disconnect
+  - Need to add logic to create lobby waiting rooms with a admin/leader that can start the game when the disired number of players join
+  - Need to connect all routes to the proper HTML template to be loaded on even response from frontend
+  - Need to add tables to DB to handle player in game stats, keep track of lobies ...
+
+DevOps:
+  - Need to set up docker to deploy instances of the game for test deployment
+  - Need to setup HTTPS connection in even we want to get of local host
+  
