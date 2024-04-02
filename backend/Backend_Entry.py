@@ -1,13 +1,15 @@
 from flask import Flask, jsonify
-from backend.DB import DatabaseOperations
-from flask import request
-app = Flask(__name__)
+from DB import DatabaseOperations
+from flask import request, render_template
+
+app = Flask(__name__, template_folder='frontend')
 db_ops = DatabaseOperations()
 
 @app.route('/')
 def home():
     
-    return 'Hello, Trivia Game!'
+    #return render_template('start.html')
+    return 'dank memes'
 
 @app.route('/questions', methods=['POST'])
 def add_question():
@@ -61,7 +63,7 @@ def get_random_question():
 @app.route('/quesitons/<question_id>', methods=['PUT'])
 def update_question(newQ, newA, oldID):
     try:
-        db_ops.update_question(newQ, newA)
+        db_ops.update_question(newQ, newA, oldID)
     except Exception as ex:
         print(f"Failed to update quesiton: {ex}")
         return jsonify({'message': f"Failed to update quesiton: {ex}"})
