@@ -34,5 +34,6 @@ class DatabaseOperations:
         return random.choice(Q_As) if Q_As else None
 
     def update_question(self, newQ, newA, oldID):
+        """ Change existing question with (newQ, newA), and delete old question (oldID)"""
         self.delete_question(oldID)
         self.add_question(newQ, newA)        

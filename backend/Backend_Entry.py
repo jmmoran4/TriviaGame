@@ -2,14 +2,14 @@ from flask import Flask, jsonify
 from DB import DatabaseOperations
 from flask import request, render_template
 
-app = Flask(__name__, template_folder='frontend')
+app = Flask(__name__, template_folder='../frontend/')
 db_ops = DatabaseOperations()
 
 @app.route('/')
 def home():
     
-    #return render_template('start.html')
-    return 'dank memes'
+    return render_template('start.html')
+   # return 'dank memes'
 
 @app.route('/questions', methods=['POST'])
 def add_question():
@@ -68,6 +68,8 @@ def update_question(newQ, newA, oldID):
         print(f"Failed to update quesiton: {ex}")
         return jsonify({'message': f"Failed to update quesiton: {ex}"})
     return jsonify({'message':'Quesiton updated successfully'})
+
+
 
 
 if __name__ == '__main__':
