@@ -5,7 +5,7 @@ Feature List:
     - Need CSS code to match each HTML file to add style according to Ben's design
     - Need JS code to handle RESTful API endpoints i.e. each button needs a route setup to speak to the back end server
     - Need Images/Art for game (question catagory icons, some memes to make it goofy, some animations for displaying rank as game goes on...)
-
+    - Need animations/images/logic for countdown timer to be displayed during each question
 Backende:
   - Need to create routes for all the different paths a user can interact with
   - Need to add logic to attach cookies to each user to keep track of player stats in case of a disconnect
