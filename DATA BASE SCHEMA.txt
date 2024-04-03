@@ -1,0 +1,7 @@
+DATA BASE SCHEMA:
+
+For adding a question the following format will be used...
+
+	{ 'ID': '', 'catagory': '', 'difficulty': '', 'question': "", 'correct_answer': '', 'incorect_awnswers': ['', '',...,'']}
+
+* Note: To retreive the entry using DataBaseOperations.getget_question_by_id(self, Q_A_ID), use FiliIOUtils.hash_dict(self, d) to get the hash of the dictionary that consists of the question entry without the 'ID' entry.

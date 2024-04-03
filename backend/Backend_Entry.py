@@ -69,8 +69,15 @@ def update_question(newQ, newA, oldID):
         return jsonify({'message': f"Failed to update quesiton: {ex}"})
     return jsonify({'message':'Quesiton updated successfully'})
 
-
-
-
+@app.route('/round/over', methods=['POST'])
+def round_over(lobbyID):
+    try:
+        lobby = db_ops.get_lobby(lobbyID)
+        lobby['_id']['round'] = lobby['_id']['round'] + 1
+    except Exception as ex:
+        print(f'Failed to retrieve lobby')
+        return jsonify({'message': f'Failed to retrieve lobby'})
+    
+    return lobby
 if __name__ == '__main__':
     app.run(debug=True)

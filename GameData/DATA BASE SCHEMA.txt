@@ -1,0 +1,5 @@
+DATA BASE SCHEMA:
+
+For adding a question the following format will be used...
+
+	{ 'type': '', 'catagory': '', 'difficulty': '', 'question': "", 'correct_answer': '', 'incorect_awnswers': ['', '',...,'']}

@@ -3,18 +3,14 @@ from bson.objectid import ObjectId
 import random
 
 # MongoDB connection setup
-client = MongoClient('your_mongodb_connection_string')
+client = MongoClient('mongodb://localhost:27017')
 db = client.trivia_database
 Q_A_collection = db.questions
-
+lobby_collection = db.lobbies
 class DatabaseOperations:
-    def add_question(self, Q, A):
+    def add_question(self, QA):
         """ Add new question(Q) with a matching answer(A) """
-        Q_A = {
-            "question": Q,
-            "answer": A
-        }
-        Q_A_collection.insert_one(Q_A)
+        Q_A_collection.insert_one(QA)
 
     def delete_question(self, Q_A_ID):
         """ Delete question and answer (Q_A) """
@@ -37,3 +33,7 @@ class DatabaseOperations:
         """ Change existing question with (newQ, newA), and delete old question (oldID)"""
         self.delete_question(oldID)
         self.add_question(newQ, newA)        
+
+    def get_lobby(self, lobbyID):
+        """ Get a lobby and its content with lobbyID """
+        return lobby_collection.find_one({"_id": ObjectId(lobbyID)})
