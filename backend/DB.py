@@ -29,10 +29,20 @@ class DatabaseOperations:
         Q_As = list(Q_A_collection.find())
         return random.choice(Q_As) if Q_As else None
 
-    def update_question(self, newQ, newA, oldID):
+    def update_question(self, newQ, newA, new_IncorrectA, oldID):
         """ Change existing question with (newQ, newA), and delete old question (oldID)"""
+        newQA = self.get_question_by_id(oldID)
+        newQA['question'] = newQ
+        newQA['correct_answer'] = newA
+        newQA['incorrect_answers'] = new_IncorrectA
         self.delete_question(oldID)
-        self.add_question(newQ, newA)        
+        self.add_question(newQA)        
+
+    def get_question_by_type(category, quesitonCache):
+        Q = Q_A_collection.find_one({"category": type})
+        while Q not in quesitonCache:
+            Q = Q_A_collection.find_one({"category": type})
+        return Q
 
     def get_lobby(self, lobbyID):
         """ Get a lobby and its content with lobbyID """

@@ -5,6 +5,11 @@ from flask import request, render_template
 app = Flask(__name__, template_folder='../frontend/')
 db_ops = DatabaseOperations()
 
+quesitonCache = []
+
+
+
+
 @app.route('/')
 def home():
     
@@ -77,7 +82,13 @@ def round_over(lobbyID):
     except Exception as ex:
         print(f'Failed to retrieve lobby')
         return jsonify({'message': f'Failed to retrieve lobby'})
-    
     return lobby
+
+@app.route('/question/<category>', methods=['GET'])
+def get_question_by_type(category, questionCahce):
+    Q = db_ops.get_question_by_type(category, quesitonCache)
+    questionCahce.append(Q)
+    return jsonify(Q) 
+
 if __name__ == '__main__':
     app.run(debug=True)
