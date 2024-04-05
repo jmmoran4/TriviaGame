@@ -1,0 +1,111 @@
+
+body {
+    background-color: #f0f8ff; /* Light blue background for a playful look */
+    font-family: 'Comic Sans MS', 'Arial', sans-serif; /* Fun, informal font */
+    margin: 0;
+    padding: 20px;
+    color: #333;
+    text-align: center;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    background-color: #fff3e0; /* Light orange background for the container */
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    color: #ff4500; /* Orange-red color for the header to stand out */
+    margin-bottom: 30px;
+}
+
+main {
+    font-size: 1.2em;
+}
+
+button {
+    background-color: #8a2be2; /* Blueviolet background for the buttons */
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    margin: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 20px; /* Larger text for readability */
+    transition: background-color 0.3s, transform 0.2s;
+    display: inline-block; /* Align buttons next to each other */
+    width: 45%; /* Make buttons wider */
+}
+
+button:hover {
+    background-color: #7b68ee; /* Medium slate blue color for hover effect */
+    transform: translateY(-5px); /* Move button up slightly on hover */
+}
+
+button:active {
+    transform: translateY(2px); /* Slightly push the button down when clicked */
+}
+
+footer {
+    margin-top: 30px;
+    color: #888;
+    font-size: 0.9em;
+}
+
+/* Animation for buttons to appear with a bounce */
+@keyframes bounceIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    70% {
+        transform: scale(1.2);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+button {
+    animation: bounceIn 0.8s;
+}
+
+
+ h2, h3, h4, h5 {
+    display: none;
+}
+
+.timer-container {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    text-align: center;
+    font-family: 'Comic Sans MS', 'Arial', sans-serif;
+}
+
+#timer {
+    font-size: 32px;
+    color: #ff4500; /* Bright color for the timer */
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    line-height: 100px; /* Center text vertically */
+    z-index: 2;
+}
+
+.timer-circle {
+    transform: rotate(-90deg); /* Start circle from top */
+}
+
+circle {
+    transition: stroke-dashoffset 1s linear;
+}
+
+@keyframes countdown {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}

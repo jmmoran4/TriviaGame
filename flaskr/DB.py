@@ -38,10 +38,16 @@ class DatabaseOperations:
         self.delete_question(oldID)
         self.add_question(newQA)        
 
-    def get_question_by_type(category, quesitonCache):
-        Q = Q_A_collection.find_one({"category": type})
-        while Q not in quesitonCache:
-            Q = Q_A_collection.find_one({"category": type})
+    def get_question_by_type(self, category, quesitonCache):
+        pipeline = [
+        {'$match': {"category": category}},
+        {'$sample': {'size': 1}}  # You can adjust the 'size' for more than one random document
+        ]
+        Qs = list(Q_A_collection.aggregate(pipeline))
+        Q = Qs[random.randint(0, len(Qs)-1)]
+
+        while Q in quesitonCache:
+            Q = Qs[random.randint(0, len(Qs)-1)]
         return Q
 
     def get_lobby(self, lobbyID):

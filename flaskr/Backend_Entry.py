@@ -2,9 +2,9 @@ from flask import Flask, jsonify
 from DB import DatabaseOperations
 from flask import request, render_template
 
-app = Flask(__name__, template_folder='../frontend/')
+app = Flask(__name__)
 db_ops = DatabaseOperations()
-
+global quesitonCache
 quesitonCache = []
 
 
@@ -13,8 +13,13 @@ quesitonCache = []
 @app.route('/')
 def home():
     
-    return render_template('start.html')
+    return render_template('start.html' )
    # return 'dank memes'
+
+
+@app.route('/start')
+def start():
+    return render_template('home.html')
 
 @app.route('/questions', methods=['POST'])
 def add_question():
@@ -84,11 +89,19 @@ def round_over(lobbyID):
         return jsonify({'message': f'Failed to retrieve lobby'})
     return lobby
 
-@app.route('/question/<category>', methods=['GET'])
-def get_question_by_type(category, questionCahce):
+@app.route('/questionByType/<category>')
+def get_question_by_type(category):
+    print('here')
     Q = db_ops.get_question_by_type(category, quesitonCache)
-    questionCahce.append(Q)
-    return jsonify(Q) 
-
+    print(Q['question'])
+    quesitonCache.append(Q)
+    try:
+        incorrect = Q['incorrect_answers']
+        return render_template('questionPage.html', question=Q['question'], correct= Q['correct_answer'],
+                        incorrect1=incorrect[0], incorrect2=incorrect[1], incorrect3=incorrect[2]) 
+    except Exception as ex:
+        print(ex)
+        return render_template('questionPage.html')
+    
 if __name__ == '__main__':
     app.run(debug=True)
