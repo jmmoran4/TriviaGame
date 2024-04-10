@@ -1,7 +1,9 @@
 import json
 from DB import DatabaseOperations
 import hashlib
+import html
 class FileIO:
+
     def __init__(self) -> None:
         self.db_ops = DatabaseOperations()
 
@@ -15,7 +17,7 @@ class FileIO:
         try:
             mainDict = json.loads(rawData)
         except Exception as ex:
-            print(ex, f'------{rawData}-----')
+            print(ex, f'------{rawData[224]}-----')
         for dict in mainDict['results']:
             QA = {
                 'type': dict['type'],
@@ -31,14 +33,19 @@ class FileIO:
     def hash_dict(self, d):
         """Create a SHA-256 hash of a dictionary."""
         d_hash = hashlib.sha256()
-        encoded = json.dumps(d, sort_keys=True).encode()
+        encoded = json.dumps(d, sort_keys=False).encode()
         d_hash.update(encoded)
         return d_hash.hexdigest()
 
 if __name__ == '__main__':
     F = FileIO()
+    #F.add_entries('GameData/GENERAL_KNOWLEDGE_MULTIPLECHOICE_MEDIUM.txt')
+    #F.add_entries('GameData/SCIENCE_NATURE_MULTIPLECHOICE_ANY.txt')
+    #F.add_entries('GameData/MYTHOLOGY_MULTIPLECHOICE_ANY.txt')
     F.add_entries('GameData/GENRAL_KNOWLEDGE_MULTPILECHOICE_HARD.txt')
+    #F.add_entries('GameData/ENTERTAINMENT_VIDEOGAMES_MULTIPLECHOICE_ANY.txt')
+
+    #####F.add_entries('GameData/GEOGRAPHY_MULTIPLECHOICE_HARD.txt')
     F.add_entries('GameData/HISTORY_MULTIPLECHOICE_HARD.txt')
-    F.add_entries('GameData/GEOGRAPHY_MULTIPLECHOICE_HARD.txt')
     F.add_entries('GameData/SCIENCE_COMPUTERS_MULTIPLECHOICE_MEDIUM.txt')
-   # F.add_entries('GameData/SPORTS_MULTIPLECHOICE_MEDIUM.txt')
+    F.add_entries('GameData/SPORTS_MULTIPLECHOICE_MEDIUM.txt')

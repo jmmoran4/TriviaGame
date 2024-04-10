@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Finished!</title>
+    <link rel="stylesheet" href="../static/gameover.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Game Over!</h1>
+        <p id="score">Your score: {{ score }}</p>
+        <button onclick="playAgain()">Play Again</button>
+    </div>
+
+    <script>
+        function playAgain() {
+            // Redirect to game start or reload the page
+            window.location.href = '/start'; // Change this URL to where the game starts
+        }
+    </script>
+</body>
+</html>

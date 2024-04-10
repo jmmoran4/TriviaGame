@@ -7,14 +7,18 @@ class TestDatabaseOperations(unittest.TestCase):
     
     def setUp(self):
         self.db_ops = DatabaseOperations()
-        self.mock_question = {"question": "What is the capital of France?", "answer": "Paris"}
+        self.mock_question = {
+            "type":"multiple","difficulty":"medium","category":"Sports",
+            "question":"What national team won the 2016 edition of UEFA European Championship?",
+            "correct_answer":"Portugal","incorrect_answers":["France","Germany","England"]
+                              }
         self.added_question = Q_A_collection.insert_one(self.mock_question).inserted_id
 
     def test_add_question(self):
-        self.db_ops.add_question("What is the largest planet?", "Jupiter")
-        added_Q_A = Q_A_collection.find_one({"question": "What is the largest planet?"})
+        self.db_ops.add_question({"type":"multiple","difficulty":"medium","category":"Sports","question":"How many scoring zones are there on a conventional dart board?","correct_answer":"82","incorrect_answers":["62","42","102"]})
+        added_Q_A = Q_A_collection.find_one({"question":"How many scoring zones are there on a conventional dart board?"})
         print(self.assertIsNotNone(added_Q_A))
-        self.assertEqual(added_Q_A['answer'], "Jupiter")
+        self.assertEqual(added_Q_A['correct_answer'], "82")
 
     def test_delete_question(self):
         self.db_ops.delete_question(self.added_question)
@@ -24,7 +28,7 @@ class TestDatabaseOperations(unittest.TestCase):
     def test_get_question_by_id(self):
         Q_A = self.db_ops.get_question_by_id(self.added_question)
         self.assertIsNotNone(Q_A)
-        self.assertEqual(Q_A['answer'], self.mock_question['answer'])
+        self.assertEqual(Q_A['correct_answer'], self.mock_question['correct_answer'])
 
     def test_get_all_questions(self):
         questions = self.db_ops.get_all_questions()
@@ -35,15 +39,16 @@ class TestDatabaseOperations(unittest.TestCase):
         random_Q_A = self.db_ops.get_random_question()
         self.assertIsNotNone(random_Q_A)
         self.assertIn('question', random_Q_A)
-        self.assertIn('answer', random_Q_A)
-        
+        self.assertIn('correct_answer', random_Q_A)
+
     def test_update_question(self):
         new_Q = "What is the smallest planet?"
         new_A = "Mercury"
-        self.db_ops.update_question(new_Q, new_A, self.added_question)
+        new_IncorrectA = ["US", "Canada", "France"]
+        self.db_ops.update_question(new_Q, new_A, new_IncorrectA, self.added_question)
         updated_Q_A = Q_A_collection.find_one({"question": new_Q})
         self.assertIsNotNone(updated_Q_A)
-        self.assertEqual(updated_Q_A['answer'], new_A)
+        self.assertEqual(updated_Q_A['correct_answer'], new_A)
 
     def test_get_lobby(self):
         lobby_id = lobby_collection.insert_one({"name": "Test Lobby"}).inserted_id

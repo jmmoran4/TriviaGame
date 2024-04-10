@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>No More Questions</title>
+    <link rel="stylesheet" href="/static/NotEnoughQs.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Out of Questions!</h1>
+        <p>We've run out of questions for this category. Please choose a new category to continue playing.</p>
+        <button onclick="startOver()">Start Over</button>
+    </div>
+
+    <script>
+        function startOver() {
+            window.location.href = '/start';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!-- The home page instructs the player to pick a category  -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trivia Game</title>
+    <link rel="stylesheet" href="../static/start.css">
+    <script src="../static/view.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Trivia Game</h1>
+        </header>
+    </div>
+    <div class="container-categories">
+        <main>
+            <p>Choose Your Trivia Category!</p>
+            <button id="button-history" onclick="AskQuestion('History')">History</button>
+            <button id="button-sports" onclick="AskQuestion('General Knowledge')">General Knowledge</button>
+            <button id="button-art" onclick="AskQuestion('Science: Mathematics')">Science: Mathematics</button>
+            <button id="button-geography" onclick="AskQuestion('Geography')">Geography</button>
+            <button id="button-science" onclick="AskQuestion('Science: Computers')">Science: Computers</button>
+            <button id="button-currentEvents" onclick="AskQuestion('Sports')">Sports</button>
+            <button id="button-entertainment" onclick="AskQuestion('Entertainment: Video Games')">Entertainment: Video Games</button>
+        </main>
+        <footer>
+            <p>Trivia Game &copy; 2024</p>
+        </footer>
+    </div>
+
+    
+</body>
+</html>

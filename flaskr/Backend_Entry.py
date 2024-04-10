@@ -1,15 +1,27 @@
 from flask import Flask, jsonify
 from DB import DatabaseOperations
 from flask import request, render_template
-
-app = Flask(__name__, template_folder='../frontend/')
+import logging
+app = Flask(__name__, static_folder='static/')
 db_ops = DatabaseOperations()
+logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(filename='app.log', level=logging.DEBUG)
+global quesitonCache
+quesitonCache = []
+
+
+
 
 @app.route('/')
 def home():
     
-    return render_template('start.html')
+    return render_template('start.html' )
    # return 'dank memes'
+
+
+@app.route('/start')
+def start():
+    return render_template('home.html')
 
 @app.route('/questions', methods=['POST'])
 def add_question():
@@ -77,7 +89,32 @@ def round_over(lobbyID):
     except Exception as ex:
         print(f'Failed to retrieve lobby')
         return jsonify({'message': f'Failed to retrieve lobby'})
-    
     return lobby
+
+@app.route('/questionByType/<category>/<questionsAnswered>/<gotRight>')
+def get_question_by_type(category, questionsAnswered, gotRight):
+    logging.info("inside get_question_by_type")
+    Q = db_ops.get_question_by_type(category, quesitonCache)
+    if Q['question'] == '':
+        return render_template('NotEnoughQs.html')
+    quesitonCache.append(Q['question'])
+    try:
+        incorrect = Q['incorrect_answers']
+        return render_template('questionPage.html', question=Q['question'], correct= Q['correct_answer'],
+            incorrect1=incorrect[0], incorrect2=incorrect[1], incorrect3=incorrect[2], category=Q['category'],
+            questionsAnswered=questionsAnswered, gotRight=gotRight) 
+    except Exception as ex:       
+        return render_template('NotEnoughQs.html')
+
+
+@app.route('/createUser')
+def create_user():
+    return render_template('createUser.html')
+            
+@app.route('/gameover/<score>')
+def gameover(score):
+    print(f'-----{score}-----')
+    return render_template('gameover.html', score=score)
+
 if __name__ == '__main__':
     app.run(debug=True)
