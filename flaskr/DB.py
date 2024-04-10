@@ -38,18 +38,23 @@ class DatabaseOperations:
         self.delete_question(oldID)
         self.add_question(newQA)        
 
-    def get_question_by_type(self, category, quesitonCache):
+    def get_question_by_type(self, category, quesitionCache):
         pipeline = [
         {'$match': {"category": category}},
-        {'$sample': {'size': 1}}  # You can adjust the 'size' for more than one random document
+        {'$sample': {'size': 1}}  
         ]
-        Qs = list(Q_A_collection.aggregate(pipeline))
-        Q = Qs[random.randint(0, len(Qs)-1)]
-
-        while Q in quesitonCache:
-            Q = Qs[random.randint(0, len(Qs)-1)]
-        return Q
+        Qs = Q_A_collection.find({"category": category})
+        print(Qs)
+        try:
+            Q = next(Qs)
+            while Q['question'] in quesitionCache:
+                Q = next(Qs)
+            return Q
+        except Exception as ex:
+            return {'type': '', 'categroy': '','questions': '', 'correct_answer': '', 'incorrect_answers': []}
 
     def get_lobby(self, lobbyID):
         """ Get a lobby and its content with lobbyID """
         return lobby_collection.find_one({"_id": ObjectId(lobbyID)})
+    
+    

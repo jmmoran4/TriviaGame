@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trivia Game</title>
-    <link rel="stylesheet" href="../static/questionPage.css">
+    <link rel="stylesheet" href="/static/questionPage.css">
 </head>
 <body>
     <div class="container">
@@ -24,15 +24,20 @@
             <h3 id="incorrect1">{{ incorrect1 }}</h3>
             <h4 id="incorrect2">{{ incorrect2 }}</h4>
             <h5 id="incorrect3">{{ incorrect3 }}</h5>
+            <h6 id="questions-answered">{{ questionsAnswered }}</h6>
+            <div id="category">{{ category }}</div>
+            <div id="gotRight"> {{ gotRight }}</div>
             <button id="button-a" onclick="Answer('button-a')">A </button>
             <button id="button-b" onclick="Answer('button-b')">B </button>
             <button id="button-c" onclick="Answer('button-c')">C </button>
             <button id="button-d" onclick="Answer('button-d')">D </button>
             <script type="text/javascript">
-                
+                // Get question answers from server template loaders
                 let questions = [document.getElementById("incorrect1").innerHTML, document.getElementById("incorrect2").innerHTML, document.getElementById("incorrect3").innerHTML, document.getElementById("correct").innerHTML];
+                // randomly assign answer to button
                 var r1 = Math.floor(Math.random() * (3 - 0 + 1) + 0);
                 document.getElementById('button-a').innerHTML = questions[r1];
+                // remove from answer list
                 questions.splice(r1, 1);
 
                 var r2 = Math.floor(Math.random() * (2 - 0 + 1) + 0);
@@ -44,8 +49,10 @@
                 questions.splice(r3, 1);
 
                 document.getElementById('button-d').innerHTML = questions[0];
-                let totalTime = 30
+                let totalTime = 30;
                 let timeLeft = totalTime;
+
+                // logic for timer displayed during questions
                 const timerElement = document.getElementById('timer');
                 const circleElement = document.getElementById('timer-circle');
                 const totalLength = circleElement.getTotalLength();
@@ -66,16 +73,44 @@
                     }
                 }, 1000);
                 
-                function Answer(choice)
-                {
-                    if (document.getElementById(choice).textContent.trim() == document.getElementById("correct").textContent.trim())
-                    {
-                        alert("YOU GOT IT");
-                    }
-                    else 
-                    {
-                        alert("EHHHH WRONG!!!");
-                    }
+                // function sleep(ms) 
+                // {
+                //     return new Promise(resolve => setTimeout(resolve, ms));
+                // }
+
+                // Triggers on user selecting answer
+                function Answer(choice) {
+                    const category = document.getElementById("category").textContent.trim();
+                    const questionsAnswered = Number(document.getElementById("questions-answered").textContent.trim());
+                    const buttonIds = ['button-a', 'button-b', 'button-c', 'button-d'];
+                    const correctAnswer = document.getElementById("correct").textContent.trim();
+
+                    // Immediately set button colors
+                    buttonIds.forEach(id => {
+                        const button = document.getElementById(id);
+                        if (button.textContent.trim() === correctAnswer) {
+                            button.classList.add('correct-answer');
+                        } else {
+                            button.classList.add('incorrect-answer');
+                        }
+                    });
+
+                    // Stop the timer
+                    clearInterval(interval);  // Assuming 'interval' is your timer's setInterval variable
+
+                    // Delay before switching to the next question
+                    setTimeout(() => {
+                        let right = Number(document.getElementById("gotRight").textContent.trim());
+                        if (document.getElementById(choice).textContent.trim() === correctAnswer) {
+                            right++;  // Increment if the answer is correct
+                        }
+
+                        if (questionsAnswered < 4) {
+                            window.location.href = `/questionByType/${category}/${questionsAnswered + 1}/${right}`;
+                        } else {
+                            window.location.href = `/gameover/${right}`;
+                        }
+                    }, 2000); // 2000 milliseconds delay (2 seconds)
                 }
 
             </script>

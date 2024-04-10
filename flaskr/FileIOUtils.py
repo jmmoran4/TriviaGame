@@ -1,7 +1,9 @@
 import json
 from DB import DatabaseOperations
 import hashlib
+import html
 class FileIO:
+
     def __init__(self) -> None:
         self.db_ops = DatabaseOperations()
 
@@ -37,8 +39,13 @@ class FileIO:
 
 if __name__ == '__main__':
     F = FileIO()
+    #F.add_entries('GameData/GENERAL_KNOWLEDGE_MULTIPLECHOICE_MEDIUM.txt')
+    #F.add_entries('GameData/SCIENCE_NATURE_MULTIPLECHOICE_ANY.txt')
+    #F.add_entries('GameData/MYTHOLOGY_MULTIPLECHOICE_ANY.txt')
     F.add_entries('GameData/GENRAL_KNOWLEDGE_MULTPILECHOICE_HARD.txt')
+    #F.add_entries('GameData/ENTERTAINMENT_VIDEOGAMES_MULTIPLECHOICE_ANY.txt')
+
+    #####F.add_entries('GameData/GEOGRAPHY_MULTIPLECHOICE_HARD.txt')
     F.add_entries('GameData/HISTORY_MULTIPLECHOICE_HARD.txt')
-    F.add_entries('GameData/GEOGRAPHY_MULTIPLECHOICE_HARD.txt')
     F.add_entries('GameData/SCIENCE_COMPUTERS_MULTIPLECHOICE_MEDIUM.txt')
     F.add_entries('GameData/SPORTS_MULTIPLECHOICE_MEDIUM.txt')
