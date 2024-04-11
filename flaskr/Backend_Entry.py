@@ -116,5 +116,7 @@ def gameover(score):
     print(f'-----{score}-----')
     return render_template('gameover.html', score=score)
 
+
+
 if __name__ == '__main__':
     app.run(debug=True)

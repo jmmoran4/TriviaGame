@@ -27,6 +27,7 @@
             <h6 id="questions-answered">{{ questionsAnswered }}</h6>
             <div id="category">{{ category }}</div>
             <div id="gotRight"> {{ gotRight }}</div>
+            <audio id="clickSound" src="/static/buttonclick.wav" preload="auto"></audio>
             <button id="button-a" onclick="Answer('button-a')">A </button>
             <button id="button-b" onclick="Answer('button-b')">B </button>
             <button id="button-c" onclick="Answer('button-c')">C </button>
@@ -80,6 +81,7 @@
 
                 // Triggers on user selecting answer
                 function Answer(choice) {
+                    document.getElementById('clickSound').play()
                     const category = document.getElementById("category").textContent.trim();
                     const questionsAnswered = Number(document.getElementById("questions-answered").textContent.trim());
                     const buttonIds = ['button-a', 'button-b', 'button-c', 'button-d'];
